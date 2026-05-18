@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meridian Realty — Homes of distinction</title>
+<meta name="description" content="Meridian Realty represents the finest residential properties across three metro markets. Discover your next home." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1a1f1a;
+    --ink-soft: #2d3530;
+    --paper: #f5f1ea;
+    --paper-warm: #ebe5d9;
+    --moss: #2f4a3a;
+    --moss-deep: #1f3327;
+    --rust: #a04f2a;
+    --line: rgba(26, 31, 26, 0.12);
+    --line-strong: rgba(26, 31, 26, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+  }
+
+  /* —— GRAIN OVERLAY —— */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* —— NAV —— */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 241, 234, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--moss);
+    border-radius: 50%;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--moss); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--moss); }
+
+  /* —— HERO —— */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 48px 80px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--moss);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(56px, 8vw, 104px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 36px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--moss);
+  }
+
+  .hero p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin-bottom: 48px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .hero-image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.05) saturate(0.9);
+  }
+
+  .hero-image-tag {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    background: rgba(245, 241, 234, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+  }
+
+  .hero-image-tag-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+  }
+
+  .hero-image-tag-price {
+    font-size: 14px;
+    color: var(--moss);
+    font-weight: 500;
+  }
+
+  /* —— SECTION HEADERS —— */
+  .section {
+    padding: 120px 48px;
+    position: relative;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .section-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--moss);
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--moss);
+  }
+
+  /* —— LISTINGS —— */
+  .listings {
+    background: var(--paper-warm);
+  }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .listing {
+    cursor: pointer;
+    transition: transform 0.4s ease;
+  }
+
+  .listing:hover { transform: translateY(-4px); }
+
+  .listing-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+    border-radius: 2px;
+  }
+
+  .listing-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .listing:hover .listing-image img { transform: scale(1.04); }
+
+  .listing-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--moss);
+    color: var(--paper);
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .listing-location {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .listing-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .listing-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  .listing-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .listing-price {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--moss);
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* —— AGENTS —— */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .agent {
+    position: relative;
+  }
+
+  .agent-image {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: var(--paper-warm);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .agent-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.2) contrast(1.05);
+  }
+
+  .agent-name {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .agent-title {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 16px;
+  }
+
+  .agent-bio {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* —— FORM —— */
+  .contact {
+    background: var(--moss-deep);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(160, 79, 42, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact .section-eyebrow { color: var(--rust); }
+
+  .contact .section-title { color: var(--paper); }
+
+  .contact .section-title em { color: var(--rust); }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+  }
+
+  .contact-intro p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(245, 241, 234, 0.75);
+    margin-bottom: 32px;
+    max-width: 440px;
+  }
+
+  .contact-features {
+    list-style: none;
+    margin-top: 40px;
+  }
+
+  .contact-features li {
+    padding: 20px 0;
+    border-top: 1px solid rgba(245, 241, 234, 0.15);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .feature-num {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--rust);
+    font-style: italic;
+  }
+
+  .feature-text {
+    font-size: 15px;
+    color: rgba(245, 241, 234, 0.85);
+  }
+
+  .lead-form {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 48px 40px;
+    border-radius: 4px;
+  }
+
+  .form-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .form-subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+  }
+
+  .form-field {
+    margin-bottom: 24px;
+  }
+
+  .form-field label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid var(--line-strong);
+    background: transparent;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+    border-radius: 0;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus {
+    outline: none;
+    border-bottom-color: var(--moss);
+  }
+
+  .form-field textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-family: 'Inter Tight', sans-serif;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-top: 16px;
+    transition: background 0.2s;
+  }
+
+  .form-submit:hover { background: var(--moss); }
+
+  .form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .form-success.active { display: block; }
+
+  .form-success-icon {
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid var(--moss);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--moss);
+    font-size: 24px;
+  }
+
+  .form-success-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .form-success-text {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .form-disclaimer {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* —— DEMO BADGE —— */
+  .demo-badge {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    z-index: 99;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s;
+  }
+
+  .demo-badge:hover { transform: translateY(-2px); }
+
+  .demo-badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--rust);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* —— DEMO MODAL —— */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 31, 26, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--paper);
+    max-width: 560px;
+    width: 100%;
+    padding: 48px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+
+  .modal-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+
+  .modal h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .modal p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  .modal ul {
+    list-style: none;
+    margin: 24px 0;
+  }
+
+  .modal ul li {
+    padding: 10px 0 10px 24px;
+    position: relative;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .modal ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--moss);
+  }
+
+  /* —— FOOTER —— */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* —— ANIMATIONS —— */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero > * { animation: fadeUp 0.8s ease both; }
+  .hero > *:nth-child(2) { animation-delay: 0.15s; }
+
+  /* —— RESPONSIVE —— */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 120px 24px 60px;
+      gap: 48px;
+    }
+    .hero-stats { gap: 32px; }
+    .section { padding: 80px 24px; }
+    .section-header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .listings-grid { grid-template-columns: 1fr; gap: 32px; }
+    .agents-grid { grid-template-columns: 1fr; gap: 32px; }
+    .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    .lead-form { padding: 32px 24px; }
+    footer {
+      padding: 32px 24px;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-mark"></div>
+    <span>Meridian</span>
+  </div>
+  <div class="nav-links">
+    <a href="#listings">Listings</a>
+    <a href="#agents">Agents</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Speak with an agent</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Est. 2008 · Three Markets</div>
+    <h1>Homes of <em>distinction</em>, found with care.</h1>
+    <p>Meridian represents thoughtful buyers and sellers across the most considered neighborhoods in the region. We believe a home is more than an asset — it is the architecture of a life.</p>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num serif">$180M</span>
+        <span class="stat-label">Annual Volume</span>
+      </div>
+      <div>
+        <span class="stat-num serif">24</span>
+        <span class="stat-label">Senior Agents</span>
+      </div>
+      <div>
+        <span class="stat-num serif">98%</span>
+        <span class="stat-label">Client Retention</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="Featured property" />
+    <div class="hero-image-tag">
+      <span class="hero-image-tag-title serif">The Hollis Residence</span>
+      <span class="hero-image-tag-price">$2.4M</span>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section class="section listings" id="listings">
+  <div class="section-header">
+    <div class="section-eyebrow">Currently Available</div>
+    <h2 class="section-title">A small selection of <em>recent listings.</em></h2>
+  </div>
+  <div class="listings-grid">
+
+    <div class="listing">
+      <div class="listing-image">
+        <span class="listing-badge">New</span>
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Modern home with large windows" />
+      </div>
+      <div class="listing-location">Westside · 4BR / 3BA</div>
+      <div class="listing-title serif">The Maple Street House</div>
+      <div class="listing-meta">
+        <span>3,200 sq ft</span>
+        <span>·</span>
+        <span>Built 2019</span>
+      </div>
+      <div class="listing-price serif">$1,250,000</div>
+    </div>
+
+    <div class="listing">
+      <div class="listing-image">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Contemporary architectural home" />
+      </div>
+      <div class="listing-location">Highland Park · 5BR / 4BA</div>
+      <div class="listing-title serif">The Cedar Grove Estate</div>
+      <div class="listing-meta">
+        <span>4,800 sq ft</span>
+        <span>·</span>
+        <span>Built 2021</span>
+      </div>
+      <div class="listing-price serif">$2,150,000</div>
+    </div>
+
+    <div class="listing">
+      <div class="listing-image">
+        <span class="listing-badge">Open House</span>
+        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80" alt="Stately family home with garden" />
+      </div>
+      <div class="listing-location">Old Town · 3BR / 2BA</div>
+      <div class="listing-title serif">The Wren Cottage</div>
+      <div class="listing-meta">
+        <span>2,100 sq ft</span>
+        <span>·</span>
+        <span>Built 1924</span>
+      </div>
+      <div class="listing-price serif">$845,000</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section class="section" id="agents">
+  <div class="section-header">
+    <div class="section-eyebrow">The People</div>
+    <h2 class="section-title">Agents who answer <em>your call.</em></h2>
+  </div>
+  <div class="agents-grid">
+
+    <div class="agent">
+      <div class="agent-image">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Senior agent portrait" />
+      </div>
+      <div class="agent-name serif">Eleanor Hartwell</div>
+      <div class="agent-title">Principal Broker</div>
+      <p class="agent-bio">Twenty-two years representing buyers and sellers across the Westside. Known for quiet negotiations and an architectural eye.</p>
+    </div>
+
+    <div class="agent">
+      <div class="agent-image">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Senior agent portrait" />
+      </div>
+      <div class="agent-name serif">Marcus Chen</div>
+      <div class="agent-title">Senior Agent</div>
+      <p class="agent-bio">A specialist in mid-century and architecturally significant homes. Marcus writes the firm's quarterly market letter.</p>
+    </div>
+
+    <div class="agent">
+      <div class="agent-image">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" alt="Senior agent portrait" />
+      </div>
+      <div class="agent-name serif">Priya Anand</div>
+      <div class="agent-title">Senior Agent</div>
+      <p class="agent-bio">Priya leads the firm's relocation practice and is the first call for clients moving in from out of state.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT / LEAD FORM -->
+<section class="section contact" id="contact">
+  <div class="section-header">
+    <div class="section-eyebrow">Begin the Conversation</div>
+    <h2 class="section-title">Tell us what you're <em>looking for.</em></h2>
+  </div>
+  <div class="contact-layout">
+
+    <div class="contact-intro">
+      <p>An agent will reach out within minutes to learn what matters to you. There is no pressure, no commitment — only a thoughtful conversation about what comes next.</p>
+      <ul class="contact-features">
+        <li>
+          <span class="feature-num serif">i</span>
+          <span class="feature-text">Response within 90 seconds, any time of day.</span>
+        </li>
+        <li>
+          <span class="feature-num serif">ii</span>
+          <span class="feature-text">A short conversation by text — never a cold call.</span>
+        </li>
+        <li>
+          <span class="feature-num serif">iii</span>
+          <span class="feature-text">Matched with the right agent for your search.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="lead-form">
+      <form id="leadForm">
+        <div class="form-title serif">Start your search</div>
+        <div class="form-subtitle">We'll reach out by SMS or WhatsApp.</div>
+
+        <div class="form-field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" required placeholder="Jane Doe" />
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" required placeholder="+1 555 123 4567" />
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+        </div>
+
+        <div class="form-field">
+          <label for="property_interest">What are you looking for?</label>
+          <textarea id="property_interest" name="property_interest" required placeholder="A 3-bedroom in the Westside under $1.4M, ideally with a garden..."></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">Send Inquiry</button>
+        <p class="form-disclaimer">By submitting, you agree to receive messages from Meridian Realty. Message and data rates may apply. Reply STOP to opt out.</p>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✓</div>
+        <div class="form-success-title serif">Thank you</div>
+        <p class="form-success-text">An agent will reach out to you by text within the next 90 seconds. Keep an eye on your phone.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Meridian Realty · All rights reserved</div>
+  <div>123 Market Square · Available across three metro regions</div>
+</footer>
+
+<!-- DEMO BADGE -->
+<div class="demo-badge" id="demoBadge">
+  <div class="demo-badge-dot"></div>
+  Portfolio demo — click to learn more
+</div>
+
+<!-- DEMO MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">×</button>
+    <div class="modal-eyebrow">About this project</div>
+    <h2>This is a portfolio demo by Rajani.</h2>
+    <p>Meridian Realty is a fictional brokerage built to showcase an AI-powered lead triage system. Submit the form to see it in action — within seconds, an AI agent will text you to qualify your needs, score your intent, and offer to book a showing.</p>
+    <ul>
+      <li>Form submission triggers a Make automation</li>
+      <li>OpenAI GPT-4o runs the qualifying conversation</li>
+      <li>Twilio handles SMS / WhatsApp messaging</li>
+      <li>Cal.com books the showing automatically</li>
+      <li>Slack alerts the agent for hot leads</li>
+    </ul>
+    <p>Built by Rajani at <strong>The AI Internship</strong> — exploring how AI replaces the inside sales desk for service businesses.</p>
+  </div>
+</div>
+
+<script>
+  // ——— CONFIG ———
+  // Replace this with your Make webhook URL once you create the scenario in Module 3
+  const MAKE_WEBHOOK_URL = 'YOUR_MAKE_WEBHOOK_URL_HERE';
+
+  // ——— FORM HANDLING ———
+  const form = document.getElementById('leadForm');
+  const successPanel = document.getElementById('formSuccess');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    const formData = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      property_interest: document.getElementById('property_interest').value,
+      source: 'Website',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      // Only send to Make if a real webhook URL is configured
+      if (MAKE_WEBHOOK_URL && !MAKE_WEBHOOK_URL.includes('YOUR_MAKE_WEBHOOK_URL_HERE')) {
+        await fetch(MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+      } else {
+        console.log('Demo mode — would send to Make:', formData);
+        // Small delay to feel realistic during demo
+        await new Promise(r => setTimeout(r, 800));
+      }
+
+      form.style.display = 'none';
+      successPanel.classList.add('active');
+    } catch (err) {
+      console.error('Form submission failed:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Try Again';
+      alert('Something went wrong. Please try again.');
+    }
+  });
+
+  // ——— DEMO MODAL ———
+  const badge = document.getElementById('demoBadge');
+  const modal = document.getElementById('modal');
+  const modalClose = document.getElementById('modalClose');
+
+  badge.addEventListener('click', () => modal.classList.add('active'));
+  modalClose.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+</script>
+
+</body>
+</html>
