@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meridian Realty — Conversation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1a1f1a;
+    --ink-soft: #2d3530;
+    --paper: #f5f1ea;
+    --paper-warm: #ebe5d9;
+    --moss: #2f4a3a;
+    --moss-deep: #1f3327;
+    --rust: #a04f2a;
+    --line: rgba(26, 31, 26, 0.12);
+    --line-strong: rgba(26, 31, 26, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper-warm);
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* ── outer shell ── */
+  .shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px 0;
+  }
+
+  /* ── phone frame ── */
+  .frame {
+    width: 100%;
+    max-width: 480px;
+    min-height: calc(100vh - 32px);
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border-radius: 16px 16px 0 0;
+    border: 1px solid var(--line-strong);
+    border-bottom: none;
+    box-shadow: 0 -4px 40px rgba(26,31,26,0.10), 0 0 0 1px rgba(26,31,26,0.04);
+    overflow: hidden;
+  }
+
+  /* ── header ── */
+  .chat-header {
+    flex-shrink: 0;
+    padding: 20px 24px 18px;
+    background: var(--moss-deep);
+    color: var(--paper);
+    border-bottom: 1px solid rgba(245,241,234,0.08);
+    position: relative;
+  }
+
+  .header-brand {
+    font-family: 'Fraunces', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,241,234,0.45);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-brand::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  .header-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .header-meta {
+    font-size: 13px;
+    color: rgba(245,241,234,0.6);
+    line-height: 1.4;
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid rgba(245,241,234,0.18);
+    color: var(--paper);
+  }
+  .status-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .status-badge[data-status="new"]        { color: #7ec8a4; }
+  .status-badge[data-status="contacted"]  { color: #f0c27a; }
+  .status-badge[data-status="qualified"]  { color: #a8d5b5; }
+  .status-badge[data-status="booked"]     { color: #6dbf8a; }
+  .status-badge[data-status="closed"]     { color: rgba(245,241,234,0.35); }
+
+  .back-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: rgba(245,241,234,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--paper); }
+
+  /* ── messages ── */
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+  }
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-track { background: transparent; }
+  .messages::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+
+  .msg-row {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+    gap: 4px;
+    animation: fadeUp 0.22s ease both;
+  }
+  .msg-row.assistant { align-self: flex-start; }
+  .msg-row.user      { align-self: flex-end; align-items: flex-end; }
+
+  .msg-sender {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0 4px;
+    opacity: 0.6;
+  }
+
+  .msg-bubble {
+    padding: 11px 15px;
+    border-radius: 16px;
+    font-size: 15px;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+  .msg-row.assistant .msg-bubble {
+    background: var(--paper-warm);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-bottom-left-radius: 4px;
+  }
+  .msg-row.user .msg-bubble {
+    background: var(--moss);
+    color: var(--paper);
+    border-bottom-right-radius: 4px;
+  }
+
+  .msg-time {
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.45;
+    padding: 0 4px;
+  }
+
+  /* ── states ── */
+  .state-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+  .state-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--moss);
+    opacity: 0.6;
+  }
+  .state-label {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .state-sub {
+    font-size: 13px;
+    opacity: 0.55;
+    max-width: 240px;
+    line-height: 1.5;
+  }
+
+  /* ── input bar ── */
+  .input-bar {
+    flex-shrink: 0;
+    padding: 12px 16px 20px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .input-wrap {
+    flex: 1;
+    background: var(--paper-warm);
+    border: 1px solid var(--line-strong);
+    border-radius: 24px;
+    padding: 10px 18px;
+    transition: border-color 0.2s;
+  }
+  .input-wrap:focus-within { border-color: var(--moss); }
+
+  #msgInput {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    resize: none;
+    line-height: 1.4;
+    max-height: 120px;
+    overflow-y: auto;
+    outline: none;
+  }
+  #msgInput::placeholder { color: rgba(45,53,48,0.4); }
+
+  .send-btn {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--moss);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    color: var(--paper);
+  }
+  .send-btn:hover { background: var(--moss-deep); }
+  .send-btn:active { transform: scale(0.93); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .send-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* ── full-page error (no lead_id) ── */
+  .full-error {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--paper);
+  }
+  .full-error-mark {
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid var(--rust);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--rust);
+  }
+  .full-error h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .full-error p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 340px;
+    line-height: 1.6;
+  }
+  .full-error a {
+    color: var(--moss);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid var(--moss);
+    padding-bottom: 1px;
+  }
+
+  /* ── animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── responsive ── */
+  @media (max-width: 540px) {
+    body { background: var(--paper); }
+    .shell { padding: 0; }
+    .frame {
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      min-height: 100vh;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+  // ——— CONSTANTS ———
+  const SUPABASE_URL        = 'https://prycclwjbfouhslwszrq.supabase.co';
+  const SUPABASE_ANON_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InByeWNjbHdqYmZvdWhzbHdzenJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDQxNTYsImV4cCI6MjA5NDY4MDE1Nn0.kKmHIg7yKrZALch5GlkTsMblaQCvHToB09D9UN_Z-hE';
+  const MAKE_REPLY_WEBHOOK_URL = 'PLACEHOLDER_REPLACE_IN_PART_4';
+
+  const HEADERS = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json'
+  };
+
+  // ——— PARSE LEAD ID ———
+  const params = new URLSearchParams(window.location.search);
+  const leadId = parseInt(params.get('lead_id'), 10);
+
+  if (!leadId || isNaN(leadId)) {
+    renderMissingError();
+  } else {
+    buildUI();
+    init();
+  }
+
+  // ——— MISSING LEAD ID ———
+  function renderMissingError() {
+    document.getElementById('app').innerHTML = `
+      <div class="full-error">
+        <div class="full-error-mark">!</div>
+        <h1>No conversation found</h1>
+        <p>A <code>lead_id</code> is required — e.g. <strong>conversation.html?lead_id=5</strong></p>
+        <a href="index.html">&#8592; Back to Meridian Realty</a>
+      </div>`;
+  }
+
+  // ——— BUILD SKELETON ———
+  function buildUI() {
+    document.getElementById('app').innerHTML = `
+      <div class="shell">
+        <div class="frame">
+
+          <div class="chat-header">
+            <div class="header-brand">Meridian Realty &middot; Jordan</div>
+            <div class="header-name" id="headerName">Loading&hellip;</div>
+            <div class="header-meta" id="headerMeta"></div>
+            <div class="status-badge" id="statusBadge" data-status="new">New</div>
+            <a href="index.html" class="back-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+              Back
+            </a>
+          </div>
+
+          <div class="messages" id="messages">
+            <div class="state-center" id="emptyState">
+              <div class="state-icon">&#10022;</div>
+              <div class="state-label">Waiting for Jordan&hellip;</div>
+              <div class="state-sub">The conversation will appear here once Jordan reaches out.</div>
+            </div>
+          </div>
+
+          <div class="input-bar">
+            <div class="input-wrap">
+              <textarea id="msgInput" rows="1" placeholder="Reply to Jordan&hellip;"></textarea>
+            </div>
+            <button class="send-btn" id="sendBtn" disabled title="Send">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>`;
+
+    const input   = document.getElementById('msgInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+      sendBtn.disabled = !input.value.trim();
+    });
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendMessage();
+      }
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+  }
+
+  // ——— STATE ———
+  let knownIds = new Set();
+
+  // ——— INIT ———
+  async function init() {
+    await fetchLead();
+    await fetchMessages();
+    setInterval(fetchMessages, 3000);
+  }
+
+  // ——— LEAD INFO (once) ———
+  async function fetchLead() {
+    try {
+      const res  = await fetch(
+        `${SUPABASE_URL}/rest/v1/leads?id=eq.${leadId}&select=name,property_interest,status`,
+        { headers: HEADERS }
+      );
+      if (!res.ok) return;
+      const rows = await res.json();
+      if (!rows.length) return;
+      const lead = rows[0];
+
+      const nameEl   = document.getElementById('headerName');
+      const metaEl   = document.getElementById('headerMeta');
+      const badgeEl  = document.getElementById('statusBadge');
+
+      if (nameEl)  nameEl.textContent  = lead.name || 'Unknown Lead';
+      if (metaEl)  metaEl.textContent  = lead.property_interest || '';
+      if (badgeEl && lead.status) {
+        const s = lead.status.toLowerCase();
+        badgeEl.setAttribute('data-status', s);
+        badgeEl.textContent = lead.status.charAt(0).toUpperCase() + lead.status.slice(1);
+      }
+    } catch (err) {
+      console.warn('fetchLead failed:', err);
+    }
+  }
+
+  // ——— MESSAGES ———
+  async function fetchMessages() {
+    try {
+      const res  = await fetch(
+        `${SUPABASE_URL}/rest/v1/messages?lead_id=eq.${leadId}&order=created_at.asc&select=*`,
+        { headers: HEADERS }
+      );
+      if (!res.ok) throw new Error(res.statusText);
+      const rows = await res.json();
+      renderNewMessages(rows);
+    } catch (err) {
+      console.warn('fetchMessages failed:', err);
+      showFetchError();
+    }
+  }
+
+  function renderNewMessages(rows) {
+    const container = document.getElementById('messages');
+    if (!container) return;
+
+    const newRows = rows.filter(r => !knownIds.has(r.id));
+    if (!newRows.length) return;
+
+    const empty = document.getElementById('emptyState');
+    if (empty) empty.remove();
+
+    const atBottom = isNearBottom(container);
+
+    newRows.forEach(row => {
+      knownIds.add(row.id);
+      container.appendChild(buildBubble(row));
+    });
+
+    if (atBottom) requestAnimationFrame(() => scrollToBottom(container));
+  }
+
+  function buildBubble(row) {
+    const isUser = (row.role || '').toLowerCase() === 'user';
+    const text   = row.content || row.body || row.message || '';
+
+    const wrap = document.createElement('div');
+    wrap.className = `msg-row ${isUser ? 'user' : 'assistant'}`;
+    wrap.dataset.id = row.id;
+    wrap.innerHTML = `
+      <div class="msg-sender">${isUser ? 'You' : 'Jordan'}</div>
+      <div class="msg-bubble">${escapeHtml(text)}</div>
+      <div class="msg-time">${formatTime(row.created_at)}</div>`;
+    return wrap;
+  }
+
+  // ——— SEND ———
+  async function sendMessage() {
+    const input   = document.getElementById('msgInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const text    = input.value.trim();
+    if (!text) return;
+
+    // optimistic render
+    const optimisticId = 'opt_' + Date.now();
+    const container    = document.getElementById('messages');
+    const empty        = document.getElementById('emptyState');
+    if (empty) empty.remove();
+
+    knownIds.add(optimisticId);
+    const el = buildBubble({ id: optimisticId, role: 'user', content: text, created_at: new Date().toISOString() });
+    container.appendChild(el);
+    scrollToBottom(container);
+
+    input.value = '';
+    input.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    try {
+      const isRealWebhook = MAKE_REPLY_WEBHOOK_URL && !MAKE_REPLY_WEBHOOK_URL.startsWith('PLACEHOLDER');
+      if (isRealWebhook) {
+        await fetch(MAKE_REPLY_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lead_id: leadId, message: text })
+        });
+      } else {
+        console.log('Demo mode — would POST to Make:', { lead_id: leadId, message: text });
+      }
+    } catch (err) {
+      console.warn('Webhook POST failed:', err);
+    }
+  }
+
+  // ——— FETCH ERROR ———
+  function showFetchError() {
+    const container = document.getElementById('messages');
+    if (!container || knownIds.size > 0) return;
+    if (container.querySelector('.error-state')) return;
+
+    const empty = document.getElementById('emptyState');
+    if (empty) empty.remove();
+
+    const el = document.createElement('div');
+    el.className = 'state-center error-state';
+    el.innerHTML = `
+      <div class="state-icon">&times;</div>
+      <div class="state-label">Could not load messages</div>
+      <div class="state-sub">Check your connection and refresh the page.</div>`;
+    container.appendChild(el);
+  }
+
+  // ——— UTILS ———
+  function isNearBottom(el) {
+    return el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+  }
+
+  function scrollToBottom(el) {
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '';
+    try {
+      const d   = new Date(iso);
+      const now = new Date();
+      const sameDay = d.toDateString() === now.toDateString();
+      if (sameDay) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return d.toLocaleDateString([], { month: 'short', day: 'numeric' }) +
+             ' · ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch { return ''; }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g,  '&amp;')
+      .replace(/</g,  '&lt;')
+      .replace(/>/g,  '&gt;')
+      .replace(/"/g,  '&quot;')
+      .replace(/\n/g, '<br>');
+  }
+</script>
+
+</body>
+</html>
