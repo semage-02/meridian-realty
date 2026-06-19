@@ -215,6 +215,14 @@
     padding: 0 4px;
   }
 
+  .msg-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    word-break: break-all;
+  }
+  .msg-link:hover { opacity: 0.75; }
+
   /* ── states ── */
   .state-center {
     flex: 1;
@@ -556,7 +564,7 @@
     wrap.dataset.id = row.id;
     wrap.innerHTML = `
       <div class="msg-sender">${isUser ? 'You' : 'Jordan'}</div>
-      <div class="msg-bubble">${escapeHtml(text)}</div>
+      <div class="msg-bubble">${linkify(text)}</div>
       <div class="msg-time">${formatTime(row.created_at)}</div>`;
     return wrap;
   }
@@ -644,8 +652,20 @@
       .replace(/&/g,  '&amp;')
       .replace(/</g,  '&lt;')
       .replace(/>/g,  '&gt;')
-      .replace(/"/g,  '&quot;')
-      .replace(/\n/g, '<br>');
+      .replace(/"/g,  '&quot;');
+  }
+
+  // Escapes HTML then wraps bare https:// URLs in clickable anchors
+  function linkify(str) {
+    const URL_RE = /(https?:\/\/[^\s<>"']+)/g;
+    const parts  = String(str).split(URL_RE);
+    return parts.map((part, i) => {
+      if (i % 2 === 1) {
+        const safe = escapeHtml(part);
+        return `<a href="${safe}" target="_blank" rel="noopener noreferrer" class="msg-link">${safe}</a>`;
+      }
+      return escapeHtml(part).replace(/\n/g, '<br>');
+    }).join('');
   }
 </script>
 
