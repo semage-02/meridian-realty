@@ -467,6 +467,8 @@
 
   // ——— STATE ———
   let knownIds = new Set();
+  // Maps sent content → optimistic DOM id, so the poll doesn't double-render the user's own message
+  const pendingByContent = new Map();
 
   // ——— INIT ———
   async function init() {
@@ -533,6 +535,12 @@
 
     newRows.forEach(row => {
       knownIds.add(row.id);
+      // If this is the real DB record for a message we already rendered optimistically, skip re-rendering
+      const content = row.content || row.body || row.message || '';
+      if ((row.role || '').toLowerCase() === 'user' && pendingByContent.has(content)) {
+        pendingByContent.delete(content);
+        return;
+      }
       container.appendChild(buildBubble(row));
     });
 
@@ -567,6 +575,7 @@
     if (empty) empty.remove();
 
     knownIds.add(optimisticId);
+    pendingByContent.set(text, optimisticId);
     const el = buildBubble({ id: optimisticId, role: 'user', content: text, created_at: new Date().toISOString() });
     container.appendChild(el);
     scrollToBottom(container);
